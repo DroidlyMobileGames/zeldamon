@@ -2,7 +2,10 @@ package droidlymobilegames.ca.zeldamon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         rightbutton = findViewById(R.id.rightbutton);
         leftbutton = findViewById(R.id.leftbutton);
         setupUILayouts();
+        setTouchEvents();
     }
 
     @Override
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupUILayouts(){
-        buttonwidthheight = game.getDisplayWidth(this)/6;
+        buttonwidthheight = game.getDisplayHeight(this)/6;
 
         upbutton.getLayoutParams().width = buttonwidthheight;
         upbutton.getLayoutParams().height = buttonwidthheight;
@@ -51,5 +55,75 @@ public class MainActivity extends AppCompatActivity {
 
         dpad_main_layout.getLayoutParams().width = buttonwidthheight*3;
         dpad_main_layout.getLayoutParams().height = buttonwidthheight*3;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void setTouchEvents(){
+        rightbutton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()){
+                    case MotionEvent.ACTION_DOWN:
+                        game.checkbuttonpressed = true;
+                        game.player.entityRight = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        game.checkbuttonpressed = false;
+                        game.player.entityRight = false;
+                        break;
+                }
+                return true;
+            }
+        });
+        leftbutton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()){
+                    case MotionEvent.ACTION_DOWN:
+                        game.checkbuttonpressed = true;
+                        game.player.entityLeft = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        game.checkbuttonpressed = false;
+                        game.player.entityLeft = false;
+                        break;
+                }
+                return true;
+            }
+        });
+
+        downbutton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()){
+                    case MotionEvent.ACTION_DOWN:
+                        game.checkbuttonpressed = true;
+                        game.player.entityDown = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        game.checkbuttonpressed = false;
+                        game.player.entityDown = false;
+                        break;
+                }
+                return true;
+            }
+        });
+        upbutton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()){
+                    case MotionEvent.ACTION_DOWN:
+                        game.checkbuttonpressed = true;
+                        game.player.entityUp = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        game.checkbuttonpressed = false;
+                        game.player.entityUp = false;
+                        break;
+                }
+                return true;
+            }
+        });
+
     }
 }
