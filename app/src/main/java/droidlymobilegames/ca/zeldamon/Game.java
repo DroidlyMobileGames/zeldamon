@@ -11,14 +11,17 @@ import androidx.annotation.NonNull;
 
 import java.util.Calendar;
 
+import droidlymobilegames.ca.zeldamon.Entities.Player;
+
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public SurfaceHolder surfaceHolder;
     public GameLoop gameLoop;
     public boolean showFPS = false;
     public Paint textpaint = new Paint();
-    public int funint = 0;
-
+    public int defaultTileSize = 0;
+    public int scaledTileSize = 0;
+    public Player player;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -26,16 +29,28 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this,surfaceHolder);
         textpaint.setColor(Color.WHITE);
         textpaint.setTextSize(25);
+
+        defaultTileSize = 16;
+        scaledTileSize = defaultTileSize * 10;
+
+        player = new Player(this);
     }
 
     public void update(){
-
+        player.updatePlayer();
     }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
-        funint += 10;
-        canvas.drawText("DROIDLY MOBILE IS AWESOME", funint,50,textpaint);
+        player.draw(canvas);
+        canvas.drawText("DROIDLY MOBILE IS AWESOME", 50,50,textpaint);
+    }
+
+    public int getDisplayWidth(Context context){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+    public int getDisplayHeight(Context context){
+        return context.getResources().getDisplayMetrics().heightPixels;
     }
 
     @Override
@@ -44,13 +59,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameLoop = new GameLoop(this,surfaceHolder);
         }
         gameLoop.startLoop();
-    }
-
-    public int getDisplayWidth(Context context){
-        return context.getResources().getDisplayMetrics().widthPixels;
-    }
-    public int getDisplayHeight(Context context){
-        return context.getResources().getDisplayMetrics().heightPixels;
     }
 
     @Override
