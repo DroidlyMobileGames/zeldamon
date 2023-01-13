@@ -46,13 +46,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.startLoop();
     }
 
-    public int getDisplayWidth(Context context){
-        return context.getResources().getDisplayMetrics().widthPixels;
-    }
-    public int getDisplayHeight(Context context){
-        return context.getResources().getDisplayMetrics().heightPixels;
-    }
-
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
