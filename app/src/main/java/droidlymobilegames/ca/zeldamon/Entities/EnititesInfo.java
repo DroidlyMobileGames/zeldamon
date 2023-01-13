@@ -4,7 +4,11 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
+import droidlymobilegames.ca.zeldamon.Game;
+
 public class EnititesInfo {
+
+    public Game game;
 
     public int entityPosX, entityPosY = 0;
     public int entityWorldX,entityWorldY = 0;

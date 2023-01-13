@@ -9,8 +9,6 @@ import droidlymobilegames.ca.zeldamon.R;
 
 public class Player extends EnititesInfo{
 
-    public Game game;
-
     public Player(Game game){
         this.game = game;
         setupSpriteSheet();
@@ -122,7 +120,7 @@ public class Player extends EnititesInfo{
 
     public void updatePlayerPosXY(){
         entityCollision = false;
-        checkPlayerCollision();
+        game.collisionHelper.checkTileCollision(this,entityCurrentDirection);
         if (!entityCollision) {
             switch (entityCurrentDirection) {
                 case "right":
@@ -140,33 +138,6 @@ public class Player extends EnititesInfo{
             }
         }
 
-    }
-
-    public void checkPlayerCollision(){
-        int checkPlayerLeftSide = entityWorldX;//Checks left side of player
-        int checkPlayerRightSide = entityWorldX + game.scaledTileSize;
-        int setPlayerLeftX = checkPlayerLeftSide/game.scaledTileSize;
-        int setPlayerRightX = checkPlayerRightSide/game.scaledTileSize;
-        int checkPlayerTopSide = entityWorldY;
-        int checkPlayerBottomSide = entityWorldY + game.scaledTileSize;
-        int setPlayerTopY = checkPlayerTopSide/game.scaledTileSize;
-        int setPlayerBottomY = checkPlayerBottomSide/game.scaledTileSize;
-
-        //When we go left or right we want to check the top tile and bottom tile position so that the player cannot walk through the tile halfway
-        if (entityCurrentDirection.equals("left")) {
-            checkTile1 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerTopY];
-            checkTile2 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerBottomY];
-            if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){
-                entityCollision = true;
-            }
-        }
-        if (entityCurrentDirection.equals("right")) {
-            checkTile1 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerTopY];
-            checkTile2 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerBottomY];
-            if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){
-                entityCollision = true;
-            }
-        }
     }
 
     public void draw(Canvas canvas){

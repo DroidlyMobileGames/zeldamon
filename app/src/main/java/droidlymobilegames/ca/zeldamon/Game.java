@@ -26,6 +26,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public int gameScreenWidth,gameScreenHeight = 0;
     public Player player;
     public TileManagement tileManagement;
+    public CollisionHelper collisionHelper;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -34,12 +35,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop = new GameLoop(this,surfaceHolder);
         player = new Player(this);
         tileManagement = new TileManagement(this);
+        collisionHelper = new CollisionHelper(this);
     }
     public void initializeGame(){
         textpaint.setColor(Color.WHITE);
         textpaint.setTextSize(50);
         defaultTileSize = 16;//Make sure this matches the dimensions of your tilesheet/spritesheet tiles
-        scaledTileSize = defaultTileSize * 10;//We scale the size for viewing purposes on devices
+        scaledTileSize = 160;//We scale the size for viewing purposes on devices
         maxColumns = 100;//Set to make the worlds X value max to 100 can be increased
         maxRows = 100;//Set to make the worlds Y value max to 100 can be increased
         gameScreenWidth = getDisplayWidth(getContext());//These values is important for multiple uses including placing our player
@@ -55,8 +57,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         tileManagement.drawTiles(canvas);
         player.draw(canvas);
         canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
-        canvas.drawText(String.valueOf(player.entityPosX)
-                .concat(" ".concat(String.valueOf(player.checkTile1))), 50,50,textpaint);
+        canvas.drawText(String.valueOf(player.entityWorldX)
+                .concat(" ".concat(String.valueOf((player.entityWorldX + scaledTileSize)/scaledTileSize))), 50,50,textpaint);
     }
 
     public int getDisplayWidth(Context context){
