@@ -14,7 +14,7 @@ public class Player extends EnititesInfo{
     public Player(Game game){
         this.game = game;
         setupSpriteSheet();
-        setupPlayInfo();
+        setupPlayerInfo();
     }
 
     public void updatePlayer(){
@@ -28,7 +28,7 @@ public class Player extends EnititesInfo{
         }
 
     }
-    public void setupPlayInfo(){
+    public void setupPlayerInfo(){
         entitySpeed = 10;
         entityScreenX = game.getDisplayWidth(game.getContext())/2 - (game.scaledTileSize/2);
         entityScreenY = game.getDisplayHeight(game.getContext())/2 - (game.scaledTileSize/2);

@@ -21,7 +21,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public Paint textpaint = new Paint();
     public int defaultTileSize = 0;
     public int scaledTileSize = 0;
+    public int maxColumns,maxRows = 0;
+    public int gameScreenWidth,gameScreenHeight = 0;
     public Player player;
+    public TileManagement tileManagement;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -32,8 +35,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         defaultTileSize = 16;
         scaledTileSize = defaultTileSize * 10;
+        maxColumns = 100;
+        maxRows = 100;
+        gameScreenWidth = getDisplayWidth(getContext());
+        gameScreenHeight = getDisplayHeight(getContext());
 
         player = new Player(this);
+        tileManagement = new TileManagement(this);
     }
 
     public void update(){
@@ -42,6 +50,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void draw(Canvas canvas){
         super.draw(canvas);
+        tileManagement.drawTiles(canvas);
         player.draw(canvas);
         canvas.drawText(String.valueOf(player.entityPosX)
                 .concat(" ".concat(String.valueOf(player.entityPosY))), 50,50,textpaint);
