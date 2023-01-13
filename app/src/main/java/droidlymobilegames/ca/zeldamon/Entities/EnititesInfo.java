@@ -1,6 +1,8 @@
 package droidlymobilegames.ca.zeldamon.Entities;
 
 import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,8 @@ import droidlymobilegames.ca.zeldamon.Game;
 public class EnititesInfo {
 
     public Game game;
+    public Rect hitbox = new Rect();
+    public Paint hitboxrect = new Paint();
 
     public int entityPosX, entityPosY = 0;
     public int entityWorldX,entityWorldY = 0;

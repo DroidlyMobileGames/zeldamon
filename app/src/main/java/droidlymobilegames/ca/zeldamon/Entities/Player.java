@@ -3,6 +3,8 @@ package droidlymobilegames.ca.zeldamon.Entities;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import droidlymobilegames.ca.zeldamon.Game;
 import droidlymobilegames.ca.zeldamon.R;
@@ -141,10 +143,15 @@ public class Player extends EnititesInfo{
     }
 
     public void draw(Canvas canvas){
+        canvas.drawRect(entityScreenX + hitbox.left,
+                entityScreenY + hitbox.top,
+                entityScreenX + hitbox.left + hitbox.right,
+                entityScreenY + hitbox.top + hitbox.bottom,hitboxrect);
         if (defaultEntitySprite!=null){
             canvas.drawBitmap(defaultEntitySprite,entityScreenX,
                     entityScreenY,null);
         }
+
 
     }
 
@@ -158,6 +165,13 @@ public class Player extends EnititesInfo{
         entityPosY = entityWorldY/game.scaledTileSize;
         entityMaxAnimCount = 12;
         entityDefaultDirection = "right";
+        //16 is just a random number I chose based on my players sprite to make collision look normal
+        hitbox.left = 16;
+        hitbox.right = game.scaledTileSize-16;
+        hitbox.top = 16;
+        hitbox.bottom = game.scaledTileSize - 16;
+        hitboxrect.setColor(Color.BLUE);
+        hitboxrect.setStyle(Paint.Style.FILL);
     }
 
     public void setupSpriteSheet(){//Replace playerwalking_spritesheet with your own spritesheet
