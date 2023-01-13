@@ -11,69 +11,37 @@ import androidx.annotation.NonNull;
 
 import java.util.Calendar;
 
-import droidlymobilegames.ca.zeldamon.Entities.Player;
-
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public SurfaceHolder surfaceHolder;
     public GameLoop gameLoop;
-    public boolean showFPS = true;
-    public boolean checkbuttonpressed = false;
+    public boolean showFPS = false;
     public Paint textpaint = new Paint();
-    public int defaultTileSize = 0;
-    public int scaledTileSize = 0;
-    public int maxColumns,maxRows = 0;
-    public int gameScreenWidth,gameScreenHeight = 0;
-    public Player player;
-    public TileManagement tileManagement;
-    public CollisionHelper collisionHelper;
+    public int funint = 0;
+
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        initializeGame();
         gameLoop = new GameLoop(this,surfaceHolder);
-        player = new Player(this);
-        tileManagement = new TileManagement(this);
-        collisionHelper = new CollisionHelper(this);
-    }
-    public void initializeGame(){
         textpaint.setColor(Color.WHITE);
-        textpaint.setTextSize(50);
-        defaultTileSize = 16;//Make sure this matches the dimensions of your tilesheet/spritesheet tiles
-        scaledTileSize = 160;//We scale the size for viewing purposes on devices
-        maxColumns = 100;//Set to make the worlds X value max to 100 can be increased
-        maxRows = 100;//Set to make the worlds Y value max to 100 can be increased
-        gameScreenWidth = getDisplayWidth(getContext());//These values is important for multiple uses including placing our player
-        gameScreenHeight = getDisplayHeight(getContext());
+        textpaint.setTextSize(25);
     }
 
     public void update(){
-        player.updatePlayer();
+
     }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
-        tileManagement.drawTiles(canvas);
-        player.draw(canvas);
-        canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
-        canvas.drawText(String.valueOf(collisionHelper.checkPlayerLeftSide).concat(" "
-                .concat(String.valueOf(collisionHelper.setPlayerRightX))),50,50,textpaint);
-    }
-
-    public int getDisplayWidth(Context context){
-        return context.getResources().getDisplayMetrics().widthPixels;
-    }
-    public int getDisplayHeight(Context context){
-        return context.getResources().getDisplayMetrics().heightPixels;
+        funint += 10;
+        canvas.drawText("DROIDLY MOBILE IS AWESOME", funint,50,textpaint);
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         if (gameLoop.getState().equals(Thread.State.TERMINATED)){
-            surfaceHolder = getHolder();
-            surfaceHolder.addCallback(this);
-            gameLoop = new GameLoop(this, surfaceHolder);
+            gameLoop = new GameLoop(this,surfaceHolder);
         }
         gameLoop.startLoop();
     }
