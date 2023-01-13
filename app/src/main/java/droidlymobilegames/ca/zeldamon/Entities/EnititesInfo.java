@@ -15,10 +15,14 @@ public class EnititesInfo {
     public int entityAnimCounter = 0;
     public int entityMaxAnimCount = 0;
 
+    //Collision checking
+    public int checkTile1,checkTile2 = 0;
+
     public String entityCurrentDirection = "";
     public String entityDefaultDirection = "";
 
     public boolean entityRight,entityLeft,entityUp,entityDown = false;
+    public boolean entityCollision = false;
 
     public Bitmap[] entitySprites = new Bitmap[500];
     public Bitmap defaultEntitySprite = null;
