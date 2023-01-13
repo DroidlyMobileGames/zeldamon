@@ -17,7 +17,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public GameLoop gameLoop;
     public boolean showFPS = false;
     public Paint textpaint = new Paint();
-    public int funintX,funintY = 0;
+    public int funint = 0;
 
     public Game(Context context){
         super(context);
@@ -25,8 +25,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this,surfaceHolder);
         textpaint.setColor(Color.WHITE);
-        textpaint.setTextSize(50);
-        funintY = 50;
+        textpaint.setTextSize(25);
     }
 
     public void update(){
@@ -35,12 +34,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void draw(Canvas canvas){
         super.draw(canvas);
-        funintX += 10;
-        if (funintX > 1080){
-            funintY +=50;
-            funintX = 0;
-        }
-        canvas.drawText("DROIDLY MOBILE IS AWESOME", funintX,funintY,textpaint);
+        funint += 10;
+        canvas.drawText("DROIDLY MOBILE IS AWESOME", funint,50,textpaint);
     }
 
     @Override
@@ -49,6 +44,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameLoop = new GameLoop(this,surfaceHolder);
         }
         gameLoop.startLoop();
+    }
+
+    public int getDisplayWidth(Context context){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+    public int getDisplayHeight(Context context){
+        return context.getResources().getDisplayMetrics().heightPixels;
     }
 
     @Override
