@@ -3,6 +3,7 @@ package droidlymobilegames.ca.zeldamon;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupUILayouts(){
-        buttonwidthheight = game.getDisplayHeight(this)/6;
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            buttonwidthheight = game.getDisplayWidth(this)/6;
+        } else {
+            buttonwidthheight = game.getDisplayHeight(this)/6;
+        }
+
 
         upbutton.getLayoutParams().width = buttonwidthheight;
         upbutton.getLayoutParams().height = buttonwidthheight;

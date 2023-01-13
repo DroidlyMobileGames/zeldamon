@@ -57,8 +57,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         tileManagement.drawTiles(canvas);
         player.draw(canvas);
         canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
-        canvas.drawText(String.valueOf(collisionHelper.setPlayerLeftX).concat(" "
-                .concat(String.valueOf(collisionHelper.checkPlayerLeftSide))),50,50,textpaint);
+        canvas.drawText(String.valueOf(collisionHelper.checkPlayerLeftSide).concat(" "
+                .concat(String.valueOf(collisionHelper.setPlayerRightX))),50,50,textpaint);
     }
 
     public int getDisplayWidth(Context context){

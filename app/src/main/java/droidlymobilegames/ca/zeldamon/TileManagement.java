@@ -97,7 +97,7 @@ public class TileManagement extends TileInfo{
         setUpTileInfo();//After tiles are loaded from tilesheet all tile details are setup
     }
 
-    public void setUpTileInfo(){
+    public void setUpTileInfo(){//This is used to check tiles that are collidable
         collisionTiles.add(String.valueOf(1));
         for (int tileID = 0; tileID<tilesList.size(); tileID++){
             tileInfo[tileID] = new TileInfo();

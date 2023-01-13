@@ -31,6 +31,8 @@ public class CollisionHelper extends EnititesInfo {
         switch (entityDirection){
             case "left":
                 setPlayerLeftX = (checkPlayerLeftSide - entity.entitySpeed)/game.scaledTileSize;
+                setPlayerTopY = (checkPlayerTopSide+entity.entitySpeed)/game.scaledTileSize;
+                setPlayerBottomY = (checkPlayerBottomSide-entity.entitySpeed)/game.scaledTileSize;
                 checkTile1 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerTopY];
                 checkTile2 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerBottomY];
                 if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){
@@ -39,6 +41,8 @@ public class CollisionHelper extends EnititesInfo {
                 break;
             case "right":
                 setPlayerRightX = (checkPlayerRightSide + entity.entitySpeed)/game.scaledTileSize;
+                setPlayerBottomY = (checkPlayerBottomSide-entity.entitySpeed)/game.scaledTileSize;
+                setPlayerTopY = (checkPlayerTopSide+entity.entitySpeed)/game.scaledTileSize;
                 checkTile1 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerTopY];
                 checkTile2 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerBottomY];
                 if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){
@@ -47,6 +51,8 @@ public class CollisionHelper extends EnititesInfo {
                 break;
             case "up":
                 setPlayerTopY = (checkPlayerTopSide - entity.entitySpeed)/game.scaledTileSize;
+                setPlayerRightX = (checkPlayerRightSide - entity.entitySpeed)/game.scaledTileSize;
+                setPlayerLeftX = (checkPlayerLeftSide + entity.entitySpeed)/game.scaledTileSize;
                 checkTile1 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerTopY];
                 checkTile2 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerTopY];
                 if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){
@@ -55,6 +61,8 @@ public class CollisionHelper extends EnititesInfo {
                 break;
             case "down":
                 setPlayerBottomY = (checkPlayerBottomSide + entity.entitySpeed)/game.scaledTileSize;
+                setPlayerRightX = (checkPlayerRightSide - entity.entitySpeed)/game.scaledTileSize;
+                setPlayerLeftX = (checkPlayerLeftSide + entity.entitySpeed)/game.scaledTileSize;
                 checkTile1 = game.tileManagement.worldTileNum[setPlayerLeftX][setPlayerBottomY];
                 checkTile2 = game.tileManagement.worldTileNum[setPlayerRightX][setPlayerBottomY];
                 if (game.tileManagement.tileInfo[checkTile1].tileCollision || game.tileManagement.tileInfo[checkTile2].tileCollision){

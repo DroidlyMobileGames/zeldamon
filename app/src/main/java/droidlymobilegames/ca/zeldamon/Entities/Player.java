@@ -159,8 +159,8 @@ public class Player extends EnititesInfo{
         entitySpeed = 10;
         entityScreenX = game.getDisplayWidth(game.getContext())/2 - (game.scaledTileSize/2);
         entityScreenY = game.getDisplayHeight(game.getContext())/2 - (game.scaledTileSize/2);
-        entityWorldX = game.scaledTileSize * 3;
-        entityWorldY = game.scaledTileSize * 5;
+        entityWorldX = game.scaledTileSize * 4;
+        entityWorldY = game.scaledTileSize * 3;
         entityPosX = entityWorldX/game.scaledTileSize;
         entityPosY = entityWorldY/game.scaledTileSize;
         entityMaxAnimCount = 12;
@@ -168,8 +168,8 @@ public class Player extends EnititesInfo{
         //16 is just a random number I chose based on my players sprite to make collision look normal
         hitbox.left = 16;
         hitbox.right = game.scaledTileSize-16;
-        hitbox.top = 16;
-        hitbox.bottom = game.scaledTileSize - 16;
+        hitbox.top = 32;
+        hitbox.bottom = game.scaledTileSize-32;
         hitboxrect.setColor(Color.BLUE);
         hitboxrect.setStyle(Paint.Style.FILL);
     }
