@@ -28,7 +28,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
         gameLoop = new GameLoop(this,surfaceHolder);
         textpaint.setColor(Color.WHITE);
-        textpaint.setTextSize(25);
+        textpaint.setTextSize(50);
 
         defaultTileSize = 16;
         scaledTileSize = defaultTileSize * 10;
@@ -43,7 +43,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas){
         super.draw(canvas);
         player.draw(canvas);
-        canvas.drawText("DROIDLY MOBILE IS AWESOME", 50,50,textpaint);
+        canvas.drawText(String.valueOf(player.entityPosX)
+                .concat(" ".concat(String.valueOf(player.entityPosY))), 50,50,textpaint);
     }
 
     public int getDisplayWidth(Context context){
