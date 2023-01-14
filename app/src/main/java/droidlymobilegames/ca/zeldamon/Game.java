@@ -10,7 +10,9 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import java.util.Calendar;
+import java.util.Random;
 
+import droidlymobilegames.ca.zeldamon.Entities.EnemyRed;
 import droidlymobilegames.ca.zeldamon.Entities.Player;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -27,6 +29,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public Player player;
     public TileManagement tileManagement;
     public CollisionHelper collisionHelper;
+
+    public EnemyRed[] enemyRed;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -36,6 +40,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player = new Player(this);
         tileManagement = new TileManagement(this);
         collisionHelper = new CollisionHelper(this);
+        enemyRed = new EnemyRed[50]; //This will allow us to add up to 50 enemies total more can be added
+        addOurFirstEnemy();
     }
     public void initializeGame(){
         textpaint.setColor(Color.WHITE);
@@ -50,13 +56,37 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         player.updatePlayer();
+        for (int red =0; red < enemyRed.length;red++){
+            if (enemyRed[red]!=null){
+                enemyRed[red].updateEnemy();
+            }
+        }
+    }
+
+    public void addOurFirstEnemy(){
+        //enemyRed[0] = new EnemyRed(this);
+       // enemyRed[0].entityWorldX = 3 * scaledTileSize;
+        //enemyRed[0].entityWorldY = 3 * scaledTileSize;
+        for (int i = 0; i < enemyRed.length;i++){
+            //Spawn multiple enemies :D
+            enemyRed[i] = new EnemyRed(this);
+            enemyRed[i].entityWorldX = 3 * scaledTileSize;
+            enemyRed[i].entityWorldY = 3 * scaledTileSize;
+        }
     }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
         tileManagement.drawTiles(canvas);
         player.draw(canvas);
+        for (int red =0; red < enemyRed.length;red++){
+            if (enemyRed[red]!=null){
+                enemyRed[red].draw(canvas);
+            }
+        }
         canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
+        canvas.drawText("Enemy Red ID 0 ".concat(String.valueOf(enemyRed[0].entityCurrentDirection).concat(" "
+                .concat(String.valueOf(enemyRed[0].random)))),50,150,textpaint);
         canvas.drawText(String.valueOf(collisionHelper.checkPlayerLeftSide).concat(" "
                 .concat(String.valueOf(collisionHelper.setPlayerRightX))),50,50,textpaint);
     }
@@ -66,6 +96,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
     public int getDisplayHeight(Context context){
         return context.getResources().getDisplayMetrics().heightPixels;
+    }
+
+    public int setRandom(int _min, int _max) {
+        Random random = new Random();
+        return random.nextInt(_max - _min + 1) + _min;
     }
 
     @Override
