@@ -22,6 +22,9 @@ public class EnititesInfo {
     public int entityAnimNum = 1;
     public int entityAnimCounter = 0;
     public int entityMaxAnimCount = 0;
+    public int setNextDirection = 0;
+    public int nextDirectionSpeed = 0;
+    public int random = 0;
 
     //Collision checking
     public int checkTile1,checkTile2 = 0;
@@ -31,6 +34,8 @@ public class EnititesInfo {
 
     public boolean entityRight,entityLeft,entityUp,entityDown = false;
     public boolean entityCollision = false;
+    public boolean entityIdle = false;
+    public boolean showHitbox = false;
 
     public Bitmap[] entitySprites = new Bitmap[500];
     public Bitmap defaultEntitySprite = null;
