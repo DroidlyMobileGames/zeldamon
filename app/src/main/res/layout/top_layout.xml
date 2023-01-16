@@ -80,5 +80,19 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="right">
+
+            <ImageView
+                android:id="@+id/attackbutton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/a_button"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
