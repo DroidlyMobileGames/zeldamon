@@ -109,4 +109,35 @@ public class CollisionHelper extends EnititesInfo {
 
         return index;
     }
+
+    public void checkPlayerCollision(EnititesInfo entity,String direction){
+        entity.hitbox.x = entity.entityWorldX + entity.hitbox.x;
+        entity.hitbox.y = entity.entityWorldY + entity.hitbox.y;
+        game.player.hitbox.x = game.player.entityWorldX + game.player.hitbox.x;
+        game.player.hitbox.y = game.player.entityWorldY + game.player.hitbox.y;
+
+        if (direction.equals("up")) {
+            entity.hitbox.y -= entity.entitySpeed;
+        }
+        if (direction.equals("down")) {
+            entity.hitbox.y += entity.entitySpeed;
+        }
+        if (direction.equals("left")) {
+            entity.hitbox.x -= entity.entitySpeed;
+        }
+        if (direction.equals("right")) {
+            entity.hitbox.x += entity.entitySpeed;
+        }
+
+        if (entity.hitbox.intersecting(game.player.hitbox)){
+            entity.entityCollision = true;
+            entity.entityIdle = true;
+        }
+
+        entity.hitbox.x = entity.entityDefaultHitboxLeft;
+        entity.hitbox.y = entity.entityDefaultHitboxTop;
+        game.player.hitbox.x = game.player.entityDefaultHitboxLeft;
+        game.player.hitbox.y = game.player.entityDefaultHitboxTop;
+
+    }
 }

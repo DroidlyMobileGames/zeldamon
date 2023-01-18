@@ -1,6 +1,7 @@
 package droidlymobilegames.ca.zeldamon.Entities;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -36,6 +37,7 @@ public class EnititesInfo {
     public int entityDefaultHitboxRight,entityDefaultHitboxBottom = 0;
     //Collision checking
     public int checkTile1,checkTile2 = 0;
+    public int entityHealth = 0;
 
     public String entityCurrentDirection = "";
     public String entityDefaultDirection = "";
@@ -50,4 +52,11 @@ public class EnititesInfo {
     public Bitmap[] entityAttackSprites = new Bitmap[500];
     public Bitmap defaultEntitySprite = null;
     public ArrayList<Integer> numoftiles = new ArrayList<>();
+
+    public void draw(Canvas canvas){
+        if (defaultEntitySprite!=null){
+            canvas.drawBitmap(defaultEntitySprite,attackScreenX,
+                    attackScreenY,null);
+        }
+    }
 }

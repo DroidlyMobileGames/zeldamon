@@ -9,11 +9,16 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
+import droidlymobilegames.ca.zeldamon.Attacks.SwordAttack;
 import droidlymobilegames.ca.zeldamon.Entities.EnemyLikeLike;
 import droidlymobilegames.ca.zeldamon.Entities.EnemyRed;
+import droidlymobilegames.ca.zeldamon.Entities.EnititesInfo;
 import droidlymobilegames.ca.zeldamon.Entities.Player;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -33,8 +38,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public CollisionHelper collisionHelper;
 
     public EnemyRed[] enemyRed;
-
     public EnemyLikeLike[] enemyLikeLikes;
+    public ArrayList<EnititesInfo> allEntities = new ArrayList<>();
+
+    public SwordAttack swordAttack;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -47,6 +54,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         enemyRed = new EnemyRed[50]; //This will allow us to add up to 50 enemies total more can be added
         //addOurFirstEnemy();
         enemyLikeLikes = new EnemyLikeLike[5];
+        swordAttack = new SwordAttack(this);
         addALikeLike();
     }
     public void initializeGame(){
@@ -61,23 +69,29 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update(){
+
         player.updatePlayer();
+        if (swordAttack!=null) {
+            swordAttack.updateSword();
+        }
         for (int red =0; red < enemyRed.length;red++){
             if (enemyRed[red]!=null){
                 enemyRed[red].updateEnemy();
             }
+            allEntities.add(enemyRed[red]);
         }
         for (int likelike =0; likelike < enemyLikeLikes.length;likelike++){
             if (enemyLikeLikes[likelike]!=null){
                 enemyLikeLikes[likelike].updateEnemy();
             }
+            allEntities.add(enemyLikeLikes[likelike]);
         }
     }
 
     public void addOurFirstEnemy(){
-        //enemyRed[0] = new EnemyRed(this);
-       // enemyRed[0].entityWorldX = 3 * scaledTileSize;
-        //enemyRed[0].entityWorldY = 3 * scaledTileSize;
+        /*enemyRed[0] = new EnemyRed(this);
+        enemyRed[0].entityWorldX = 3 * scaledTileSize;
+        enemyRed[0].entityWorldY = 3 * scaledTileSize;*/
         for (int i = 0; i < enemyRed.length;i++){
             //Spawn multiple enemies :D
             enemyRed[i] = new EnemyRed(this);
@@ -95,20 +109,39 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas){
         super.draw(canvas);
         tileManagement.drawTiles(canvas);
-        player.draw(canvas);
-        for (int red =0; red < enemyRed.length;red++){
+        allEntities.clear();
+        allEntities.add(player);
+        if (swordAttack!=null) {
+            swordAttack.draw(canvas);
+        }
+        //player.draw(canvas);
+        /*for (int red =0; red < enemyRed.length;red++){
             if (enemyRed[red]!=null){
                 enemyRed[red].draw(canvas);
             }
-        }
+        }*/
         for (int likelike =0; likelike < enemyLikeLikes.length;likelike++){
             if (enemyLikeLikes[likelike]!=null){
-                enemyLikeLikes[likelike].draw(canvas);
+                allEntities.add(enemyLikeLikes[likelike]);
+               // enemyLikeLikes[likelike].draw(canvas);
             }
         }
+
+        Collections.sort(allEntities, new Comparator<EnititesInfo>() {
+            @Override
+            public int compare(EnititesInfo entityA, EnititesInfo entityB) {
+                int checky = Integer.compare(entityA.entityWorldY,entityB.entityWorldY);
+                return checky;
+            }
+        });
+
+        for (int e = 0; e<allEntities.size();e++){
+            allEntities.get(e).draw(canvas);
+        }
+
         canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
-        //canvas.drawText("Enemy Red ID 0 ".concat(String.valueOf(enemyRed[0].entityCurrentDirection).concat(" "
-               // .concat(String.valueOf(enemyRed[0].random)))),50,150,textpaint);
+        /*canvas.drawText("Enemy Red ID 0 ".concat(String.valueOf(enemyRed[0].entityCurrentDirection).concat(" "
+                .concat(String.valueOf(enemyRed[0].random)))),50,150,textpaint);*/
         canvas.drawText(String.valueOf(player.entityAttackAnimNum).concat(" "
                 .concat(String.valueOf(player.entityAttackAnimCounter))),50,50,textpaint);
     }

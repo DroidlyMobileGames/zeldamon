@@ -61,11 +61,11 @@ public class EnemyLikeLike extends EnititesInfo{
             entityCurrentDirection = "left";
             entityDefaultDirection = "left";
         }else if (entityUp){
-            entityCurrentDirection = "up";
-            entityDefaultDirection = "up";
+            entityCurrentDirection = "right";
+            entityDefaultDirection = "right";
         }else if (entityDown){
-            entityCurrentDirection = "down";
-            entityDefaultDirection = "down";
+            entityCurrentDirection = "left";
+            entityDefaultDirection = "left";
         }else if (entityIdle){
             entityCurrentDirection = "idle";
         }
@@ -103,7 +103,7 @@ public class EnemyLikeLike extends EnititesInfo{
                 defaultEntitySprite = entitySprites[5];
             }
         }
-        if (entityCurrentDirection.equals("up")) {
+        if (entityCurrentDirection.equals("right")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
                 defaultEntitySprite = entitySprites[4];
             }
@@ -111,7 +111,7 @@ public class EnemyLikeLike extends EnititesInfo{
                 defaultEntitySprite = entitySprites[5];
             }
         }
-        if (entityCurrentDirection.equals("down")) {
+        if (entityCurrentDirection.equals("left")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
                 defaultEntitySprite = entitySprites[4];
             }
@@ -126,10 +126,10 @@ public class EnemyLikeLike extends EnititesInfo{
             if (entityDefaultDirection.equals("left")){
                 defaultEntitySprite = entitySprites[4];
             }
-            if (entityDefaultDirection.equals("up")){
+            if (entityDefaultDirection.equals("right")){
                 defaultEntitySprite = entitySprites[4];
             }
-            if (entityDefaultDirection.equals("down")){
+            if (entityDefaultDirection.equals("left")){
                 defaultEntitySprite = entitySprites[4];
             }
         }
@@ -139,6 +139,7 @@ public class EnemyLikeLike extends EnititesInfo{
     public void updatePlayerPosXY(){
         entityCollision = false;
         game.collisionHelper.checkTileCollision(this,entityCurrentDirection);
+        game.collisionHelper.checkPlayerCollision(this,entityCurrentDirection);
         if (!entityCollision) {
             switch (entityCurrentDirection) {
                 case "right":

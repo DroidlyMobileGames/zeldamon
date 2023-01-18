@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import droidlymobilegames.ca.zeldamon.Attacks.SwordAttack;
 import droidlymobilegames.ca.zeldamon.Game;
 import droidlymobilegames.ca.zeldamon.R;
 
@@ -160,12 +161,13 @@ public class Player extends EnititesInfo{
 
     public void draw(Canvas canvas){
 
-        if (!entityAttacking) {
+        if (showHitbox) {
             canvas.drawRect(attackScreenX + hitbox.x,
                     attackScreenY + hitbox.y,
                     attackScreenX + hitbox.x + hitbox.width,
                     attackScreenY + hitbox.y + hitbox.height, hitboxrect);
         }
+
 
         if (defaultEntitySprite!=null){
             canvas.drawBitmap(defaultEntitySprite,attackScreenX,
@@ -216,7 +218,7 @@ public class Player extends EnititesInfo{
         while (currentRow<maxRows){
             //Each sprite tile is given an ID based on the number of images loaded from the spritesheet
             entitySprites[numberOftiles] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
-                    currentColumn * game.defaultTileSize,currentRow * game.defaultTileSize,game.defaultTileSize,game.defaultTileSize),
+                            currentColumn * game.defaultTileSize,currentRow * game.defaultTileSize,game.defaultTileSize,game.defaultTileSize),
                     game.scaledTileSize,game.scaledTileSize,false);
 
             currentColumn ++;
@@ -245,28 +247,19 @@ public class Player extends EnititesInfo{
         entityAttackSprites[0] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,0 * 16,32,16),
                 game.scaledTileSize * 2,game.scaledTileSize,false);
-
         entityAttackSprites[1] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,1 * 16,32,32),
                 game.scaledTileSize * 2,game.scaledTileSize * 2,false);
-
-
         entityAttackSprites[2] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,48,32,32),
                 game.scaledTileSize * 2,game.scaledTileSize *2 ,false);
-
-        //Attack left sprite
-
         //Attack up sprite
         entityAttackSprites[3] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,3 * 32,32,32),
                 game.scaledTileSize * 2,game.scaledTileSize * 2,false);
-
         entityAttackSprites[4] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,4 * 32,32,32),
                 game.scaledTileSize * 2,game.scaledTileSize * 2,false);
-
-
         entityAttackSprites[5] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,5 * 32,32,32),
                 game.scaledTileSize * 2,game.scaledTileSize *2 ,false);
@@ -319,18 +312,31 @@ public class Player extends EnititesInfo{
 
         if (entityDefaultDirection.equals("down")) {
             attackScreenX = entityScreenX - game.scaledTileSize;
+            game.swordAttack = new SwordAttack(game);
+            game.swordAttack.entityWorldX = entityWorldX + hitbox.x;
+            game.swordAttack.entityWorldY = entityWorldY + hitbox.y + hitbox.height;
         }
         if (entityDefaultDirection.equals("up")){
             attackScreenY = entityScreenY - game.scaledTileSize;
+            game.swordAttack = new SwordAttack(game);
+            game.swordAttack.entityWorldX = entityWorldX + hitbox.x;
+            game.swordAttack.entityWorldY = entityWorldY - hitbox.y + hitbox.height;
         }
         if (entityDefaultDirection.equals("right")){
             attackScreenX = entityScreenX;
             attackScreenY = entityScreenY - game.scaledTileSize;
+            game.swordAttack = new SwordAttack(game);
+            game.swordAttack.entityWorldX = entityWorldX + hitbox.width;
+            game.swordAttack.entityWorldY = entityWorldY + hitbox.y;
         }
         if (entityDefaultDirection.equals("left")){
             attackScreenX = entityScreenX - game.scaledTileSize;
             attackScreenY = entityScreenY - game.scaledTileSize;
+            game.swordAttack = new SwordAttack(game);
+            game.swordAttack.entityWorldX = entityWorldX - hitbox.width + hitbox.x;
+            game.swordAttack.entityWorldY = entityWorldY + hitbox.y;
         }
+
         if (game.checkbuttonpressed){
             entityAttackAnimCounter ++;
             if (entityAttackAnimCounter>entityAttackMaxAnim){
@@ -426,8 +432,7 @@ public class Player extends EnititesInfo{
 
     public void checkEnemy(final int i){
         if (i != 999){
-
+            //game.enemyLikeLikes[i] = null;
         }
-        System.out.println("GET ENEMY " + i);
     }
 }
