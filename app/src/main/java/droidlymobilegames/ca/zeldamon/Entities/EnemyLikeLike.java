@@ -11,9 +11,9 @@ import java.util.Random;
 import droidlymobilegames.ca.zeldamon.Game;
 import droidlymobilegames.ca.zeldamon.R;
 
-public class EnemyRed extends EnititesInfo{
+public class EnemyLikeLike extends EnititesInfo{
 
-    public EnemyRed(Game game){
+    public EnemyLikeLike(Game game){
         this.game = game;
         setupSpriteSheet();
         setupPlayerInfo();
@@ -40,7 +40,7 @@ public class EnemyRed extends EnititesInfo{
                 entityLeft = true;
             }else
             if (random > 75 && random < 100){
-               entityUp = true;
+                entityUp = true;
             }else
             if (random > 125 && random < 150){
                 entityDown = true;
@@ -89,60 +89,48 @@ public class EnemyRed extends EnititesInfo{
         //Change this however you'd like but to keep it easy I placed my logic like so
         if (entityCurrentDirection.equals("left")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
-                defaultEntitySprite = entitySprites[6];
+                defaultEntitySprite = entitySprites[4];
             }
-            if (entityAnimNum == 2) {
-                defaultEntitySprite = entitySprites[7];
-            }
-            if (entityAnimNum == 4) {
-                defaultEntitySprite = entitySprites[8];
+            if (entityAnimNum == 2 || entityAnimNum == 4) {
+                defaultEntitySprite = entitySprites[5];
             }
         }
         if (entityCurrentDirection.equals("right")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
-                defaultEntitySprite = entitySprites[9];
+                defaultEntitySprite = entitySprites[4];
             }
-            if (entityAnimNum == 2) {
-                defaultEntitySprite = entitySprites[10];
-            }
-            if (entityAnimNum == 4) {
-                defaultEntitySprite = entitySprites[11];
+            if (entityAnimNum == 2 || entityAnimNum == 4) {
+                defaultEntitySprite = entitySprites[5];
             }
         }
         if (entityCurrentDirection.equals("up")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
-                defaultEntitySprite = entitySprites[3];
-            }
-            if (entityAnimNum == 2) {
                 defaultEntitySprite = entitySprites[4];
             }
-            if (entityAnimNum == 4) {
+            if (entityAnimNum == 2 || entityAnimNum == 4) {
                 defaultEntitySprite = entitySprites[5];
             }
         }
         if (entityCurrentDirection.equals("down")) {
             if (entityAnimNum == 1 || entityAnimNum == 3) {
-                defaultEntitySprite = entitySprites[0];
+                defaultEntitySprite = entitySprites[4];
             }
-            if (entityAnimNum == 2) {
-                defaultEntitySprite = entitySprites[1];
-            }
-            if (entityAnimNum == 4) {
-                defaultEntitySprite = entitySprites[2];
+            if (entityAnimNum == 2 || entityAnimNum == 4) {
+                defaultEntitySprite = entitySprites[5];
             }
         }
         if (entityCurrentDirection.equals("idle")) {
             if (entityDefaultDirection.equals("right")){
-                defaultEntitySprite = entitySprites[9];
+                defaultEntitySprite = entitySprites[4];
             }
             if (entityDefaultDirection.equals("left")){
-                defaultEntitySprite = entitySprites[6];
+                defaultEntitySprite = entitySprites[4];
             }
             if (entityDefaultDirection.equals("up")){
-                defaultEntitySprite = entitySprites[3];
+                defaultEntitySprite = entitySprites[4];
             }
             if (entityDefaultDirection.equals("down")){
-                defaultEntitySprite = entitySprites[0];
+                defaultEntitySprite = entitySprites[4];
             }
         }
         updatePlayerPosXY();//Now we update the player current position in the world
@@ -186,7 +174,7 @@ public class EnemyRed extends EnititesInfo{
                 entityWorldX - game.gameScreenWidth < game.player.entityWorldX + game.player.entityScreenX &&
                 entityWorldY + game.gameScreenHeight > game.player.entityWorldY - game.player.entityScreenY &&
                 entityWorldY - game.gameScreenHeight < game.player.entityWorldY + game.player.entityScreenY) {
-            if (showHitbox) {
+            if (!showHitbox) {
                 canvas.drawRect(entityScreenX + hitbox.x,
                         entityScreenY + hitbox.y,
                         entityScreenX + hitbox.x + hitbox.width,
@@ -209,10 +197,10 @@ public class EnemyRed extends EnititesInfo{
         entityWorldY = game.scaledTileSize * 3;
         entityPosX = entityWorldX/game.scaledTileSize;
         entityPosY = entityWorldY/game.scaledTileSize;
-        entityMaxAnimCount = 12;
+        entityMaxAnimCount = 8;
         entityDefaultDirection = "right";
         //16 is just a random number I chose based on my players sprite to make collision look normal
-        hitbox.x = 16;
+        hitbox.x = 8;
         hitbox.width = game.scaledTileSize-16;
         hitbox.y = 32;
         hitbox.height = game.scaledTileSize-32;
@@ -225,7 +213,6 @@ public class EnemyRed extends EnititesInfo{
         entityDefaultHitboxTop = (int) hitbox.y;
         entityDefaultHitboxRight = (int) hitbox.width;
         entityDefaultHitboxBottom = (int) hitbox.height;
-
     }
 
     public void setupSpriteSheet(){//Replace playerwalking_spritesheet with your own spritesheet
@@ -235,7 +222,7 @@ public class EnemyRed extends EnititesInfo{
         int numberOftiles = 0;
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        spritesheet1 = BitmapFactory.decodeResource(game.getResources(), R.drawable.spritesheet_red,bitmapOptions);
+        spritesheet1 = BitmapFactory.decodeResource(game.getResources(), R.drawable.enemy_spritesheet,bitmapOptions);
         int maxColumns = spritesheet1.getWidth()/game.defaultTileSize;
         int maxRows = spritesheet1.getHeight()/game.defaultTileSize;
 

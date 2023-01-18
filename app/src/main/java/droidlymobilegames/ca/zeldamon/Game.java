@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import java.util.Calendar;
 import java.util.Random;
 
+import droidlymobilegames.ca.zeldamon.Entities.EnemyLikeLike;
 import droidlymobilegames.ca.zeldamon.Entities.EnemyRed;
 import droidlymobilegames.ca.zeldamon.Entities.Player;
 
@@ -32,6 +33,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public CollisionHelper collisionHelper;
 
     public EnemyRed[] enemyRed;
+
+    public EnemyLikeLike[] enemyLikeLikes;
     public Game(Context context){
         super(context);
         surfaceHolder = getHolder();
@@ -43,6 +46,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         collisionHelper = new CollisionHelper(this);
         enemyRed = new EnemyRed[50]; //This will allow us to add up to 50 enemies total more can be added
         //addOurFirstEnemy();
+        enemyLikeLikes = new EnemyLikeLike[5];
+        addALikeLike();
     }
     public void initializeGame(){
         textpaint.setColor(Color.WHITE);
@@ -62,6 +67,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 enemyRed[red].updateEnemy();
             }
         }
+        for (int likelike =0; likelike < enemyLikeLikes.length;likelike++){
+            if (enemyLikeLikes[likelike]!=null){
+                enemyLikeLikes[likelike].updateEnemy();
+            }
+        }
     }
 
     public void addOurFirstEnemy(){
@@ -74,7 +84,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             enemyRed[i].entityWorldX = 3 * scaledTileSize;
             enemyRed[i].entityWorldY = 3 * scaledTileSize;
         }
+
     }
+    public void addALikeLike(){
+        enemyLikeLikes[1] = new EnemyLikeLike(this);
+        enemyLikeLikes[1].entityWorldX = 5 * scaledTileSize;
+        enemyLikeLikes[1].entityWorldY = 3 * scaledTileSize;
+   }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
@@ -83,6 +99,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (int red =0; red < enemyRed.length;red++){
             if (enemyRed[red]!=null){
                 enemyRed[red].draw(canvas);
+            }
+        }
+        for (int likelike =0; likelike < enemyLikeLikes.length;likelike++){
+            if (enemyLikeLikes[likelike]!=null){
+                enemyLikeLikes[likelike].draw(canvas);
             }
         }
         canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);

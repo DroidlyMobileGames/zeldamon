@@ -17,13 +17,13 @@ public class CollisionHelper extends EnititesInfo {
 
     public void checkTileCollision(EnititesInfo entity,final String entityDirection){
         //Check Right & Left
-        checkPlayerLeftSide = entity.entityWorldX + entity.hitbox.left;
-        checkPlayerRightSide = entity.entityWorldX + entity.hitbox.left + entity.hitbox.right;
+        checkPlayerLeftSide = (int) (entity.entityWorldX + entity.hitbox.x);
+        checkPlayerRightSide = (int) (entity.entityWorldX + entity.hitbox.x + entity.hitbox.width);
         setPlayerLeftX = checkPlayerLeftSide/game.scaledTileSize;
         setPlayerRightX = checkPlayerRightSide/game.scaledTileSize;
         //Check Up & Down
-        checkPlayerTopSide = entity.entityWorldY + entity.hitbox.top;
-        checkPlayerBottomSide = entity.entityWorldY + entity.hitbox.top + entity.hitbox.bottom;
+        checkPlayerTopSide = (int) (entity.entityWorldY + entity.hitbox.y);
+        checkPlayerBottomSide = (int) (entity.entityWorldY + entity.hitbox.y + entity.hitbox.height);
         setPlayerTopY = checkPlayerTopSide/game.scaledTileSize;
         setPlayerBottomY = checkPlayerBottomSide/game.scaledTileSize;//To round the current Y value we can -1 so that when the player is walking left or right they don't collide
         //When we go left or right we want to check the top tile and bottom tile position so that the player cannot walk through the tile halfway
@@ -70,5 +70,43 @@ public class CollisionHelper extends EnititesInfo {
                 }
                 break;
         }
+    }
+
+    public int checkEntityCollision(EnititesInfo entity, EnititesInfo[] targetEntity, final String direction){
+        int index = 999;
+
+        for (int es = 0; es < targetEntity.length; es++) {
+            if (targetEntity[es] != null) {
+                entity.hitbox.x = entity.entityWorldX + entity.hitbox.x;
+                entity.hitbox.y = entity.entityWorldY + entity.hitbox.y;
+                targetEntity[es].hitbox.x = targetEntity[es].entityWorldX + targetEntity[es].hitbox.x;
+                targetEntity[es].hitbox.y = targetEntity[es].entityWorldY + targetEntity[es].hitbox.y;
+
+                if (direction.equals("up")) {
+                    entity.hitbox.y -= entity.entitySpeed;
+                }
+                if (direction.equals("down")) {
+                    entity.hitbox.y += entity.entitySpeed;
+                }
+                if (direction.equals("left")) {
+                    entity.hitbox.x -= entity.entitySpeed;
+                }
+                if (direction.equals("right")) {
+                    entity.hitbox.x += entity.entitySpeed;
+                }
+                if (entity.hitbox.intersecting(targetEntity[es].hitbox)) {
+                    entity.entityCollision = true;
+                    index = es;
+                }
+
+                entity.hitbox.x = entity.entityDefaultHitboxLeft;
+                entity.hitbox.y = entity.entityDefaultHitboxTop;
+                targetEntity[es].hitbox.x = targetEntity[es].entityDefaultHitboxLeft;
+                targetEntity[es].hitbox.y = targetEntity[es].entityDefaultHitboxTop;
+
+            }
+        }
+
+        return index;
     }
 }

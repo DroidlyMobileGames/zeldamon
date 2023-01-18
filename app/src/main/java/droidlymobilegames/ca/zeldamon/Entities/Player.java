@@ -137,6 +137,8 @@ public class Player extends EnititesInfo{
     public void updatePlayerPosXY(){
         entityCollision = false;
         game.collisionHelper.checkTileCollision(this,entityCurrentDirection);
+        int poop = game.collisionHelper.checkEntityCollision(this,game.enemyLikeLikes,entityCurrentDirection);
+        checkEnemy(poop);
         if (!entityCollision) {
             switch (entityCurrentDirection) {
                 case "right":
@@ -158,11 +160,13 @@ public class Player extends EnititesInfo{
 
     public void draw(Canvas canvas){
 
+        if (!entityAttacking) {
+            canvas.drawRect(attackScreenX + hitbox.x,
+                    attackScreenY + hitbox.y,
+                    attackScreenX + hitbox.x + hitbox.width,
+                    attackScreenY + hitbox.y + hitbox.height, hitboxrect);
+        }
 
-        canvas.drawRect(entityScreenX + hitbox.left,
-                entityScreenY + hitbox.top,
-                entityScreenX + hitbox.left + hitbox.right,
-                entityScreenY + hitbox.top + hitbox.bottom,hitboxrect);
         if (defaultEntitySprite!=null){
             canvas.drawBitmap(defaultEntitySprite,attackScreenX,
                     attackScreenY,null);
@@ -175,22 +179,27 @@ public class Player extends EnititesInfo{
         entitySpeed = 10;
         entityScreenX = game.getDisplayWidth(game.getContext())/2 - (game.scaledTileSize/2);
         entityScreenY = game.getDisplayHeight(game.getContext())/2 - (game.scaledTileSize/2);
-        entityWorldX = game.scaledTileSize * 4;
+        entityWorldX = game.scaledTileSize * 3;
         entityWorldY = game.scaledTileSize * 3;
         entityPosX = entityWorldX/game.scaledTileSize;
         entityPosY = entityWorldY/game.scaledTileSize;
         entityMaxAnimCount = 12;
         entityDefaultDirection = "right";
         //16 is just a random number I chose based on my players sprite to make collision look normal
-        hitbox.left = 16;
-        hitbox.right = game.scaledTileSize-16;
-        hitbox.top = 32;
-        hitbox.bottom = game.scaledTileSize-32;
+        hitbox.x = 16;
+        hitbox.width = game.scaledTileSize-16;
+        hitbox.y = 32;
+        hitbox.height = game.scaledTileSize-32;
         hitboxrect.setColor(Color.BLUE);
         hitboxrect.setStyle(Paint.Style.FILL);
         entityAttackMaxAnim = 4;
         attackScreenX = entityScreenX;
         attackScreenY = entityScreenY;
+
+        entityDefaultHitboxLeft = (int) hitbox.x;
+        entityDefaultHitboxTop = (int) hitbox.y;
+        entityDefaultHitboxRight = (int) hitbox.width;
+        entityDefaultHitboxBottom = (int) hitbox.height;
     }
 
     public void setupSpriteSheet(){//Replace playerwalking_spritesheet with your own spritesheet
@@ -413,5 +422,12 @@ public class Player extends EnititesInfo{
                 game.checkbuttonpressed = true;
             }
         }
+    }
+
+    public void checkEnemy(final int i){
+        if (i != 999){
+
+        }
+        System.out.println("GET ENEMY " + i);
     }
 }

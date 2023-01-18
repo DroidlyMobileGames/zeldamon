@@ -3,15 +3,17 @@ package droidlymobilegames.ca.zeldamon.Entities;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import java.util.ArrayList;
 
 import droidlymobilegames.ca.zeldamon.Game;
+import droidlymobilegames.ca.zeldamon.Hitbox;
 
 public class EnititesInfo {
 
     public Game game;
-    public Rect hitbox = new Rect();
+    public Hitbox hitbox = new Hitbox();
     public Paint hitboxrect = new Paint();
 
     public int entityPosX, entityPosY = 0;
@@ -30,7 +32,8 @@ public class EnititesInfo {
     public int entityAttackMaxAnim = 0;
     public int attackScreenX = 0;
     public int attackScreenY = 0;
-
+    public int entityDefaultHitboxLeft,entityDefaultHitboxTop = 0;
+    public int entityDefaultHitboxRight,entityDefaultHitboxBottom = 0;
     //Collision checking
     public int checkTile1,checkTile2 = 0;
 
