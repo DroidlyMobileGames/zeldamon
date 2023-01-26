@@ -20,7 +20,49 @@ public class EnemyLikeLike extends EnititesInfo{
     }
 
     public void updateEnemy(){
-        updatePlayerDirection();//We start by checking what direction the user wants to go then update everything else thereafter
+        if (!beingAttacked){
+            attackPaint.setAlpha(255);
+            updatePlayerDirection();//We start by checking what direction the user wants to go then update everything else thereafter
+        }
+        if (beingAttacked){
+            gettingAttackedAnimation();
+            resetAttack();
+        }
+    }
+    public void gettingAttackedAnimation(){
+        checkBeingAttacked ++;
+        if (checkBeingAttacked>4){
+            if (beingAttackedNum == 0){
+                beingAttackedNum = 1;
+            }else if (beingAttackedNum == 1){
+                beingAttackedNum = 2;
+            }else if (beingAttackedNum == 2){
+                beingAttackedNum = 3;
+            }else if (beingAttackedNum == 3){
+                beingAttackedNum = 1;
+            }
+            checkBeingAttacked = 0;
+        }
+        if (beingAttackedNum == 1){
+            attackPaint.setAlpha(100);
+        }
+        if (beingAttackedNum == 2){
+            attackPaint.setAlpha(255);
+        }
+        if (beingAttackedNum == 3){
+            attackPaint.setAlpha(100);
+        }
+        if (beingAttackedNum == 4){
+            attackPaint.setAlpha(255);
+        }
+    }
+    public void resetAttack() {
+        resetAttackTimer ++;
+        if (resetAttackTimer>50){
+            attackPaint.setAlpha(255);
+            beingAttacked = false;
+            resetAttackTimer = 0;
+        }
     }
 
     public void setRandomDirections(){
@@ -46,10 +88,6 @@ public class EnemyLikeLike extends EnititesInfo{
                 entityDown = true;
             }
         }
-
-
-
-
     }
 
     public void updatePlayerDirection(){
@@ -183,11 +221,9 @@ public class EnemyLikeLike extends EnititesInfo{
             }
             if (defaultEntitySprite != null) {
                 canvas.drawBitmap(defaultEntitySprite, entityScreenX,
-                        entityScreenY, null);
+                        entityScreenY, attackPaint);
             }
         }
-
-
     }
 
     public void setupPlayerInfo(){//Also like calling initialize Player
@@ -201,10 +237,10 @@ public class EnemyLikeLike extends EnititesInfo{
         entityMaxAnimCount = 8;
         entityDefaultDirection = "right";
         //16 is just a random number I chose based on my players sprite to make collision look normal
-        hitbox.x = 8;
-        hitbox.width = game.scaledTileSize-16;
+        hitbox.x = 4;
+        hitbox.width = game.scaledTileSize-8;
         hitbox.y = 32;
-        hitbox.height = game.scaledTileSize-32;
+        hitbox.height = game.scaledTileSize-16;
         hitboxrect.setColor(Color.BLUE);
         hitboxrect.setStyle(Paint.Style.FILL);
         setNextDirection = 249;

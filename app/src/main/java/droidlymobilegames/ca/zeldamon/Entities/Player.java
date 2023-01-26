@@ -160,38 +160,33 @@ public class Player extends EnititesInfo{
     }
 
     public void draw(Canvas canvas){
-
         if (showHitbox) {
             canvas.drawRect(attackScreenX + hitbox.x,
                     attackScreenY + hitbox.y,
                     attackScreenX + hitbox.x + hitbox.width,
                     attackScreenY + hitbox.y + hitbox.height, hitboxrect);
         }
-
-
         if (defaultEntitySprite!=null){
             canvas.drawBitmap(defaultEntitySprite,attackScreenX,
                     attackScreenY,null);
         }
-
-
     }
 
     public void setupPlayerInfo(){//Also like calling initialize Player
-        entitySpeed = 10;
+        entitySpeed = game.scaledTileSize/16;
         entityScreenX = game.getDisplayWidth(game.getContext())/2 - (game.scaledTileSize/2);
         entityScreenY = game.getDisplayHeight(game.getContext())/2 - (game.scaledTileSize/2);
         entityWorldX = game.scaledTileSize * 3;
         entityWorldY = game.scaledTileSize * 3;
         entityPosX = entityWorldX/game.scaledTileSize;
         entityPosY = entityWorldY/game.scaledTileSize;
-        entityMaxAnimCount = 12;
+        entityMaxAnimCount = 8;
         entityDefaultDirection = "right";
         //16 is just a random number I chose based on my players sprite to make collision look normal
-        hitbox.x = 16;
-        hitbox.width = game.scaledTileSize-16;
+        hitbox.x = 4;
+        hitbox.width = game.scaledTileSize-8;
         hitbox.y = 32;
-        hitbox.height = game.scaledTileSize-32;
+        hitbox.height = game.scaledTileSize-16;
         hitboxrect.setColor(Color.BLUE);
         hitboxrect.setStyle(Paint.Style.FILL);
         entityAttackMaxAnim = 4;
@@ -315,12 +310,14 @@ public class Player extends EnititesInfo{
             game.swordAttack = new SwordAttack(game);
             game.swordAttack.entityWorldX = entityWorldX + hitbox.x;
             game.swordAttack.entityWorldY = entityWorldY + hitbox.y + hitbox.height;
+            game.swordAttack.entityCurrentDirection = "down";
         }
         if (entityDefaultDirection.equals("up")){
             attackScreenY = entityScreenY - game.scaledTileSize;
             game.swordAttack = new SwordAttack(game);
             game.swordAttack.entityWorldX = entityWorldX + hitbox.x;
-            game.swordAttack.entityWorldY = entityWorldY - hitbox.y + hitbox.height;
+            game.swordAttack.entityWorldY = entityWorldY - (hitbox.height-hitbox.y);
+            game.swordAttack.entityCurrentDirection = "up";
         }
         if (entityDefaultDirection.equals("right")){
             attackScreenX = entityScreenX;
@@ -432,7 +429,7 @@ public class Player extends EnititesInfo{
 
     public void checkEnemy(final int i){
         if (i != 999){
-            //game.enemyLikeLikes[i] = null;
+
         }
     }
 }

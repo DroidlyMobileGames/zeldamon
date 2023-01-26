@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout dpad_main_layout;
     public int buttonwidthheight = 0;
     public RelativeLayout gameviewholder;
+    public TextView testtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         rightbutton = findViewById(R.id.rightbutton);
         leftbutton = findViewById(R.id.leftbutton);
         attackbutton = findViewById(R.id.attackbutton);
+        testtext = findViewById(R.id.testtext);
         setupUILayouts();
         setTouchEvents();
+        getGameControllerIds();
     }
 
     @Override
@@ -191,5 +199,135 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public ArrayList<Integer> getGameControllerIds() {
+        ArrayList<Integer> gameControllerDeviceIds = new ArrayList<Integer>();
+        int[] deviceIds = InputDevice.getDeviceIds();
+        for (int deviceId : deviceIds) {
+            InputDevice dev = InputDevice.getDevice(deviceId);
+            int sources = dev.getSources();
+
+            // Verify that the device has gamepad buttons, control sticks, or both.
+            if (((sources & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD)
+                    || ((sources & InputDevice.SOURCE_JOYSTICK)
+                    == InputDevice.SOURCE_JOYSTICK)) {
+                dpad_main_layout.setVisibility(View.GONE);
+                attackbutton.setVisibility(View.GONE);
+                // This device is a game controller. Store its device ID.
+                if (!gameControllerDeviceIds.contains(deviceId)) {
+                    gameControllerDeviceIds.add(deviceId);
+                }
+            }
+        }
+        return gameControllerDeviceIds;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case 23:
+
+                break;
+            case 19:
+                if (!game.player.entityAttacking) {
+                    game.checkbuttonpressed = false;
+                    game.player.entityUp = false;
+                }
+                game.checkbutton = "none";
+                break;
+            case 20:
+                if (!game.player.entityAttacking) {
+                    game.checkbuttonpressed = false;
+                    game.player.entityDown = false;
+                }
+                game.checkbutton = "none";
+                break;
+            case 21:
+                if (!game.player.entityAttacking) {
+                    game.checkbuttonpressed = false;
+                    game.player.entityLeft = false;
+                }
+                game.checkbutton = "none";
+                break;
+            case 22:
+                if (!game.player.entityAttacking) {
+                    game.checkbuttonpressed = false;
+                    game.player.entityRight = false;
+                }
+                game.checkbutton = "none";
+                break;
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent){
+        if (keyEvent.getRepeatCount() == 0){
+            switch (keyCode){
+                case 23://A
+                    if (!game.player.entityAttacking) {
+                        game.checkbuttonpressed = true;
+                        game.player.entityAttacking = true;
+                        game.player.entityDown = false;
+                        game.player.entityUp = false;
+                        game.player.entityRight = false;
+                        game.player.entityLeft = false;
+                        game.player.entityAttackAnimCounter = 0;
+                        game.player.entityAttackAnimNum = 1;
+                    }
+                    break;
+                case 4://B
+                    break;
+                case 62://Y
+                    break;
+                case 67://X
+                    break;
+                case 19://UP
+                    if (game.checkbutton.equals("none")) {
+                        if (!game.player.entityAttacking) {
+                            game.checkbuttonpressed = true;
+                            game.player.entityUp = true;
+                            game.checkbutton = "up";
+                        }
+                    }
+                    break;
+                case 20://DOWN
+                    if (game.checkbutton.equals("none")) {
+                        if (!game.player.entityAttacking) {
+                            game.checkbuttonpressed = true;
+                            game.player.entityDown = true;
+                            game.checkbutton = "down";
+                        }
+                    }
+                    break;
+                case 21://LEFT
+                    if (game.checkbutton.equals("none")) {
+                        if (!game.player.entityAttacking) {
+                            game.checkbuttonpressed = true;
+                            game.player.entityLeft = true;
+                            game.checkbutton = "left";
+                        }
+                    }
+                    break;
+                case 22://RIGHT
+                    if (game.checkbutton.equals("none")) {
+                        if (!game.player.entityAttacking) {
+                            game.checkbuttonpressed = true;
+                            game.player.entityRight = true;
+                            game.checkbutton = "right";
+                        }
+                    }
+                    break;
+            }
+
+        }
+        testtext.setText(String.valueOf(keyEvent.getKeyCode()));
+        return super.onKeyDown(keyCode,keyEvent);
     }
 }

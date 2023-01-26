@@ -16,6 +16,7 @@ public class EnititesInfo {
     public Game game;
     public Hitbox hitbox = new Hitbox();
     public Paint hitboxrect = new Paint();
+    public Paint attackPaint = new Paint();
 
     public int entityPosX, entityPosY = 0;
     public int entityWorldX,entityWorldY = 0;
@@ -37,7 +38,9 @@ public class EnititesInfo {
     public int entityDefaultHitboxRight,entityDefaultHitboxBottom = 0;
     //Collision checking
     public int checkTile1,checkTile2 = 0;
-    public int entityHealth = 0;
+    public int resetAttackTimer = 0;
+    public int checkBeingAttacked = 0;
+    public int beingAttackedNum = 0;
 
     public String entityCurrentDirection = "";
     public String entityDefaultDirection = "";
@@ -47,6 +50,7 @@ public class EnititesInfo {
     public boolean entityIdle = false;
     public boolean showHitbox = false;
     public boolean entityAttacking = false;
+    public boolean beingAttacked = false;
 
     public Bitmap[] entitySprites = new Bitmap[500];
     public Bitmap[] entityAttackSprites = new Bitmap[500];

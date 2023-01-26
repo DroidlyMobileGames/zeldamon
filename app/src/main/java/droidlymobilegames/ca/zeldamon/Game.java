@@ -27,7 +27,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public GameLoop gameLoop;
     public boolean showFPS = true;
     public boolean checkbuttonpressed = false;
-    public String checkbutton = "";
+    public String checkbutton = "none";
     public Paint textpaint = new Paint();
     public int defaultTileSize = 0;
     public int scaledTileSize = 0;
@@ -61,7 +61,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         textpaint.setColor(Color.WHITE);
         textpaint.setTextSize(50);
         defaultTileSize = 16;//Make sure this matches the dimensions of your tilesheet/spritesheet tiles
-        scaledTileSize = 160;//We scale the size for viewing purposes on devices
+        scaledTileSize = defaultTileSize*6;//We scale the size for viewing purposes on devices
         maxColumns = 100;//Set to make the worlds X value max to 100 can be increased
         maxRows = 100;//Set to make the worlds Y value max to 100 can be increased
         gameScreenWidth = getDisplayWidth(getContext());//These values is important for multiple uses including placing our player

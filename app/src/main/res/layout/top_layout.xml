@@ -80,19 +80,29 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/attackbutton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="50dp"
-                android:background="@drawable/a_button"/>
+                android:background="@drawable/a_button" />
+
+            <TextView
+                android:id="@+id/testtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:text="TEST"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
