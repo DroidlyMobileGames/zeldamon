@@ -1,13 +1,12 @@
 package droidlymobilegames.ca.zeldamon;
 
 import android.view.SurfaceHolder;
-
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread{
-    public static final double MAX_UPS = 60.0;
+    public static final double MAX_UPS = 120;
     private static final double UPS_PERIOD = 1E+3/MAX_UPS;
 
     private Game game;
@@ -47,8 +46,9 @@ public class GameLoop extends Thread{
                     game.update();
                     updateCount++;
 
-                    game.draw(canvas);
+
                 }
+                game.draw(canvas);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             } finally {
@@ -71,7 +71,7 @@ public class GameLoop extends Thread{
 
             // Skip frames to keep up with target UPS
             while(sleepTime < 0 && updateCount < MAX_UPS-1) {
-                game.update();
+                //game.update();
                 updateCount++;
                 elapsedTime = System.currentTimeMillis() - startTime;
                 sleepTime = (long) (updateCount*UPS_PERIOD - elapsedTime);

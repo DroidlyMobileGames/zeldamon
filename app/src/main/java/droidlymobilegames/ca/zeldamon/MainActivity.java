@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.top_layout);
         game = new Game(this);
+        setContentView(R.layout.top_layout);
+
         gameviewholder = findViewById(R.id.gameviewholder);
         gameviewholder.addView(game);
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setupUILayouts();
         setTouchEvents();
         getGameControllerIds();
+
     }
 
     @Override
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             buttonwidthheight = game.getDisplayHeight(this)/6;
         }
-
 
         upbutton.getLayoutParams().width = buttonwidthheight;
         upbutton.getLayoutParams().height = buttonwidthheight;
@@ -270,7 +271,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent){
         if (keyEvent.getRepeatCount() == 0){
             switch (keyCode){
-                case 23://A
+                /*case 23://A*/
+                case KeyEvent.KEYCODE_A://Key number is 29
                     if (!game.player.entityAttacking) {
                         game.checkbuttonpressed = true;
                         game.player.entityAttacking = true;

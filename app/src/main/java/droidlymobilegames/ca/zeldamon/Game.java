@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -22,6 +23,25 @@ import droidlymobilegames.ca.zeldamon.Entities.EnititesInfo;
 import droidlymobilegames.ca.zeldamon.Entities.Player;
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
+
+
+
+
+    public Game(Context context){
+        super(context);
+
+        initializeGame();
+
+        player = new Player(this);
+        tileManagement = new TileManagement(this);
+        collisionHelper = new CollisionHelper(this);
+        enemyRed = new EnemyRed[50]; //This will allow us to add up to 50 enemies total more can be added
+        //addOurFirstEnemy();
+        enemyLikeLikes = new EnemyLikeLike[5];
+        swordAttack = new SwordAttack(this);
+        addALikeLike();
+
+    }
 
     public SurfaceHolder surfaceHolder;
     public GameLoop gameLoop;
@@ -42,26 +62,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public ArrayList<EnititesInfo> allEntities = new ArrayList<>();
 
     public SwordAttack swordAttack;
-    public Game(Context context){
-        super(context);
+    public void initializeGame(){
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        initializeGame();
         gameLoop = new GameLoop(this,surfaceHolder);
-        player = new Player(this);
-        tileManagement = new TileManagement(this);
-        collisionHelper = new CollisionHelper(this);
-        enemyRed = new EnemyRed[50]; //This will allow us to add up to 50 enemies total more can be added
-        //addOurFirstEnemy();
-        enemyLikeLikes = new EnemyLikeLike[5];
-        swordAttack = new SwordAttack(this);
-        addALikeLike();
-    }
-    public void initializeGame(){
         textpaint.setColor(Color.WHITE);
         textpaint.setTextSize(50);
         defaultTileSize = 16;//Make sure this matches the dimensions of your tilesheet/spritesheet tiles
-        scaledTileSize = defaultTileSize*6;//We scale the size for viewing purposes on devices
+        scaledTileSize = defaultTileSize*10;//We scale the size for viewing purposes on devices
         maxColumns = 100;//Set to make the worlds X value max to 100 can be increased
         maxRows = 100;//Set to make the worlds Y value max to 100 can be increased
         gameScreenWidth = getDisplayWidth(getContext());//These values is important for multiple uses including placing our player
@@ -105,7 +113,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         enemyLikeLikes[1].entityWorldX = 5 * scaledTileSize;
         enemyLikeLikes[1].entityWorldY = 3 * scaledTileSize;
    }
-
+    @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
         tileManagement.drawTiles(canvas);
@@ -139,11 +147,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             allEntities.get(e).draw(canvas);
         }
 
-        canvas.drawText("FPS ".concat(String.valueOf(gameLoop.getAverageFPS())),50,100,textpaint);
+        canvas.drawText("FPS ".concat(String.valueOf((long)gameLoop.getAverageFPS())),50,textpaint.getTextSize(),textpaint);
+        canvas.drawText("UPS ".concat(String.valueOf((long)gameLoop.getAverageUPS())),50,textpaint.getTextSize()*2,textpaint);
+        canvas.drawText("TileSize ".concat(String.valueOf(scaledTileSize)),50,textpaint.getTextSize()*3,textpaint);
         /*canvas.drawText("Enemy Red ID 0 ".concat(String.valueOf(enemyRed[0].entityCurrentDirection).concat(" "
                 .concat(String.valueOf(enemyRed[0].random)))),50,150,textpaint);*/
-        canvas.drawText(String.valueOf(player.entityAttackAnimNum).concat(" "
-                .concat(String.valueOf(player.entityAttackAnimCounter))),50,50,textpaint);
     }
 
     public int getDisplayWidth(Context context){
@@ -177,4 +185,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
 
     }
+
+
 }

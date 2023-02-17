@@ -239,6 +239,12 @@ public class Player extends EnititesInfo{
         int maxRows = spritesheet1.getHeight()/game.defaultTileSize;
 
         //Attack down sprite
+        entityAttackSprites[77] =
+                Bitmap.createScaledBitmap(BitmapFactory.decodeResource(
+                        game.getResources(),R.drawable.attack_down_up_spritesheet),
+                        150,
+                        150,
+                        false);
         entityAttackSprites[0] = Bitmap.createScaledBitmap(Bitmap.createBitmap(spritesheet1,
                         0 * 32,0 * 16,32,16),
                 game.scaledTileSize * 2,game.scaledTileSize,false);
